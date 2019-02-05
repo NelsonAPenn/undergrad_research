@@ -135,3 +135,14 @@ class Poly
   private:
     std::vector<T> coefs;
 };
+template <class T>
+std::ostream & operator << (std::ostream & out, Poly<T> poly)
+{
+  out<<poly.get(0)<<"x^0";
+  for(int r=1;r<=poly.deg();r++)
+  {
+    out<<" + "<<poly.get(r)<<"x^"<<r;
+  }
+  out<<'\n';
+  return out;
+}

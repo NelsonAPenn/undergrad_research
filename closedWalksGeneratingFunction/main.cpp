@@ -18,7 +18,8 @@ int main()
   Matrix<Poly<int>> tmp=I-(A*z);
   Poly<int> F=Matrix<Poly<int>>::det(tmp);
   Poly<int> tmpPoly=z* F.prime();
-  Poly<int> generatingFunction=mPoly-Poly<int>::TaylorSeries(tmpPoly,F,7);
+  Poly<int> generatingFunction=mPoly-Poly<int>::TaylorSeries(tmpPoly,F,10);
+  std::cout<<generatingFunction;
 
   return 0;
 }
