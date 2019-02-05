@@ -13,13 +13,24 @@ int main()
   z.set(1,1);
   int m=3;
   Poly<int> mPoly=3;
+  int degree=10;
   //thing=A is 3x3 so we want to use a 3x3 identity matrix.
   Matrix<Poly<int>> I=Matrix<Poly<int>>::I(m);
   Matrix<Poly<int>> tmp=I-(A*z);
   Poly<int> F=Matrix<Poly<int>>::det(tmp);
   Poly<int> tmpPoly=z* F.prime();
-  Poly<int> generatingFunction=mPoly-Poly<int>::TaylorSeries(tmpPoly,F,10);
+  Poly<int> generatingFunction=mPoly-Poly<int>::TaylorSeries(tmpPoly,F,degree);
   std::cout<<generatingFunction;
+  Poly<int> LHS=0;
+  Matrix<Poly<int>> matrixPower=I;
+  for(int i=0;i<=degree;i++)
+  {
+    Poly<int> x(i,0);
+    x.set(i,1);
+    LHS=LHS+Matrix<Poly<int>>::tr(matrixPower)*x;
+    matrixPower=matrixPower*A;
+  }
+  std::cout<<LHS;
 
   return 0;
 }

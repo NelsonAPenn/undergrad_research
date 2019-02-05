@@ -120,16 +120,16 @@ class Matrix{
         return Matrix(0,0,nothing);
       }
       Matrix<T> output(this->r,other.dim(1),0);
-      for(int i=0;i<output.dim(0);i++)
+      for(int i=1;i<=output.dim(0);i++)
       {
-        for(int j=0;j<output.dim(1);j++)
+        for(int j=1;j<=output.dim(1);j++)
         {
-          int sum=0;
-          for(int k=0;k<this->c;k++)
+          T sum=0;
+          for(int k=1;k<=this->c;k++)
           {
-            sum=sum+values[i][k]*other.get(k+1,j+1);
+            sum=sum+(get(i,k)*other.get(k,j));
           }
-          values[i-1][j-1]=sum;
+          output.set(i,j,sum);
         }
       }
       return output;
