@@ -97,12 +97,10 @@ class Poly
     T operator ()(T x)
     {
       T output=0;
-      T power=1;
-      output+=power*get(0);
-      for(int i=1;i<=deg();i++)
+      for(auto i=coefs.rbegin();i!=coefs.rend();i++)
       {
-        power*=x;
-        output+=power*get(i);
+        output*=x;
+        output+=(*i);
       }
       return output;
     }
