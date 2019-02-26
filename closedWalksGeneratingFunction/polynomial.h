@@ -16,6 +16,11 @@ class Poly
       coefs.resize(1);
       set(0,other);
     }
+    Poly<T>(int other)
+    {
+      coefs.resize(1);
+      set(0,(T)(other));
+    }
 
     explicit Poly<T>(int degree, T initVal)
     {

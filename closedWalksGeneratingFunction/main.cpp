@@ -2,59 +2,37 @@
 #include <iostream>
 #include "matrix.h"
 #include "polynomial.h"
+//#include "gmpwrapper.h"
+#include <gmpxx.h>
 int main()
 {
-  //small example
-  Matrix<Poly<long>> A(3,3,0);
-  A.set(1,1,1);
-  A.set(1,2,1);
-  A.set(2,3,1);
-  A.set(3,1,1);
-  Poly<long> z(1,0);
-  z.set(1,1);
-  int m=3;
-  Poly<long> mPoly=3;
-  int degree=10;
-  //thing=A is 3x3 so we want to use a 3x3 identity matrix.
-  Matrix<Poly<long>> I=Matrix<Poly<long>>::I(m);
-  Matrix<Poly<long>> tmp=I-(A*z);
-  Poly<long> F=Matrix<Poly<long>>::det(tmp);
-  Poly<long> tmpPoly=z* F.prime();
-  Poly<long> generatingFunction=mPoly-Poly<long>::TaylorSeries(tmpPoly,F,degree);
-  Poly<long> LHS=0;
-  Matrix<Poly<long>> matrixPower=I;
-  for(int i=0;i<=degree;i++)
-  {
-    Poly<long> x(i,0);
-    x.set(i,1);
-    LHS=LHS+Matrix<Poly<long>>::tr(matrixPower)*x;
-    matrixPower=matrixPower*A;
-  }
-  std::cout<<"Small example: \n";
-  std::cout<<"LHS: "<<LHS;
-  std::cout<<"RHS: "<<generatingFunction;
-
+  int m=0;
+  std::cout<<"Enter size of matrix: \n";
+  std::cin>>m;
+  int degree=0;
+  std::cout<<"Enter desired degree of polynomial:\n";
+  std::cin>>degree;
   //Large example, all 1`s except for diagonal
-  degree=5;
-  m=100;
-  mPoly=m;
-  I=Matrix<Poly<long>>::I(m);
-  A=Matrix<Poly<long>>(m,m,1);
+  Poly<mpz_class> mPoly=(mpz_class)(m);
+  Matrix<Poly<mpz_class>> I=Matrix<Poly<mpz_class>>::I(m);
+  Matrix<Poly<mpz_class>> A=Matrix<Poly<mpz_class>>(m,m,(mpz_class)(1));
   A=A-I;
-  LHS=0;
-  matrixPower=I;
+  Poly<mpz_class> LHS=(mpz_class)(0);
+  Matrix<Poly<mpz_class>> matrixPower=I;
   for(int i=0;i<=degree;i++)
   {
-    Poly<long> x(i,0);
-    x.set(i,1);
-    LHS=LHS+Matrix<Poly<long>>::tr(matrixPower)*x;
+    Poly<mpz_class> x(i,(mpz_class)(0));
+    x.set(i,(mpz_class)(1));
+    LHS=LHS+Matrix<Poly<mpz_class>>::tr(matrixPower)*x;
     matrixPower=matrixPower*A;
   }
   std::cout<<"Large example: \n";
   std::cout<<"LHS: "<<LHS;
+  Poly<mpz_class> z(1,(mpz_class)(0));
+  z.set(1,(mpz_class)(1));
   
-  F=Matrix<Poly<long>>::det(I-(A*z));
-  generatingFunction=mPoly-Poly<long>::TaylorSeries(z*F.prime(),F,degree);
+  Poly<mpz_class> F=Matrix<Poly<mpz_class>>::det(I-(A*z));
+  Poly<mpz_class> generatingFunction=mPoly-Poly<mpz_class>::TaylorSeries(z*F.prime(),F,degree);
   std::cout<<"RHS: "<<generatingFunction;
   
   return 0;
