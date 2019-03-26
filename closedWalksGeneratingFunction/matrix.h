@@ -52,6 +52,19 @@ class Matrix{
       }
       return sum;
     }
+    static Matrix<T> diag(Matrix<T> matrix)
+    {
+      if(matrix.dim(0)!=matrix.dim(1))
+        std::cout<<"error";
+      int n=matrix.dim(0);
+      T zero=0;
+      Matrix<T> output(n,n,zero);
+      for(int i=1;i<=n;i++)
+      {
+        output.set(i,i,matrix.get(i,i));
+      }
+      return output;
+    }
     Matrix<T>(int r1, int c1, T initVal)
     {
       this->r=r1;
@@ -62,6 +75,7 @@ class Matrix{
         values.push_back(tmp);
       }
     }
+    
     Matrix<T> crossOut(int row, int col)
     {
       row--;col--;
@@ -188,7 +202,7 @@ class Matrix{
     int r;
     int c;
 };
-template <class T>
+  template <class T>
 std::ostream & operator << (std::ostream & out, Matrix<T> matrix)
 {
   for(int r=1;r<=matrix.dim(0);r++)
