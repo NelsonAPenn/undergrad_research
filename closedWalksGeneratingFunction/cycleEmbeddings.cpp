@@ -40,7 +40,13 @@ mpq_class cycleEmbeddings(int length, Matrix<mpq_class> A)
         break;
       }
     case 5:
+      {
+      Matrix<mpq_class> A2=A*A;
+      Matrix<mpq_class> A3=A2*A;
+      Matrix<mpq_class> A5=A3*A2;
+      output=Matrix<mpq_class>::tr(A5)*one/10-Matrix<mpq_class>::tr(Matrix<mpq_class>::diag(A2).hadamard(Matrix<mpq_class>::diag(A3)))*one/2+Matrix<mpq_class>::tr(A2.hadamard(A3))*one/2;
       break;
+      }
     case 6:
       break;
     case 7:
