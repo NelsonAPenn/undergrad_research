@@ -5,29 +5,29 @@ template <class T>
 class Poly
 {
   public:
-    Poly<T>()
+    Poly<T>() //default constructor, makes zero polynomial
     {
       coefs.resize(0);
       coefs.resize(1);
       coefs[0]=0;
     }
-    Poly<T>(const T& other)
+    Poly<T>(const T& other) //implicit cast for easy creation of polynomials of degree 0
     {
       coefs.resize(1);
       set(0,other);
     }
-    Poly<T>(int other)
+    Poly<T>(int other) //implicit cast specifically for integer literals, to prevent double implicit casting problem.
     {
       coefs.resize(1);
       set(0,(T)(other));
     }
 
-    explicit Poly<T>(int degree, T initVal)
+    explicit Poly<T>(int degree, T initVal) //explicit constructor, degree self-explanatory, initVal initial value for each coefficient
     {
       coefs.resize(0);
       coefs.resize(degree+1,initVal);
     }
-    Poly<T> prime()
+    Poly<T> prime() //derivative of polynomial
     {
       Poly<T> output(deg()-1,0);
       for(int i=1;i<coefs.size();i++)
@@ -36,15 +36,15 @@ class Poly
       }
       return output;
     }
-    void set(int pos, T coef)
+    void set(int pos, T coef) //set coefficient of x^pos
     {
       coefs[pos]=coef;
     }
-    T get(int pos)
+    T get(int pos) //get coefficient of x^pos
     {
       return coefs[pos];
     }
-    void removeTrailingZeros()
+    void removeTrailingZeros() //self explanatory, removes excess space for higher degrees taken up by zeros
     {
       int j=0;
       for(auto i=coefs.rbegin();i!=coefs.rend() && (*i)==0;i++)
@@ -55,7 +55,7 @@ class Poly
         j--;
       coefs.resize(coefs.size()-j);
     }
-    Poly<T> operator *(Poly<T> other)
+    Poly<T> operator *(Poly<T> other) //polynomial multiplication
     {
       Poly<T> output(deg()+other.deg(),0);
       for(int i=0;i<=deg();i++)
@@ -68,7 +68,7 @@ class Poly
       output.removeTrailingZeros();
       return output;
     }
-    Poly<T> operator /(Poly<T> other)
+    Poly<T> operator /(Poly<T> other) //polynomial division- might not currently work, because it didn't end up being necessary in calculating the specific generating functions or counting cycle embeddings
     {
       Poly<T> d=other;
       Poly<T> q;
@@ -82,7 +82,7 @@ class Poly
       }
       return q;
     }
-    Poly<T> operator +(Poly<T> other)
+    Poly<T> operator +(Poly<T> other) //polynomial addition
     {
       Poly<T> output(std::max(deg(),other.deg()),0);
       for(int i=0;i<=output.deg();i++)
@@ -99,7 +99,7 @@ class Poly
       output.removeTrailingZeros();
       return output;
     }
-    T operator ()(T x)
+    T operator ()(T x) //evaluation of polynomial at value x, implements Horner method. Usage: if polynomial is t, calculate t(x) by writing t(x). Designed to be intuitive!
     {
       T output=0;
       for(auto i=coefs.rbegin();i!=coefs.rend();i++)
@@ -109,16 +109,16 @@ class Poly
       }
       return output;
     }
-    Poly<T> operator -(Poly<T> other)
+    Poly<T> operator -(Poly<T> other) //polynomial subtraction
     {
       Poly<T> neg1=-1;
       return (*this)+(other*neg1);
     }
-    int deg()
+    int deg() //return degree of polynomial
     {
       return coefs.size()-1;
     }
-    static Poly<T> TaylorSeries(Poly<T> num, Poly<T> den, int deg)
+    static Poly<T> TaylorSeries(Poly<T> num, Poly<T> den, int deg) //calculates the first terms of the talyor series for polynomial division num/den (where num and den are polynomials) up to the term with x^deg
     {
       T fact=1;
       Poly<T> output(deg,0);
@@ -139,7 +139,7 @@ class Poly
     std::vector<T> coefs;
 };
 template <class T>
-std::ostream & operator << (std::ostream & out, Poly<T> poly)
+std::ostream & operator << (std::ostream & out, Poly<T> poly) //also redefined stream insertion for a quick and nice display of polynomials.
 {
   out<<poly.get(0)<<"x^0";
   for(int r=1;r<=poly.deg();r++)

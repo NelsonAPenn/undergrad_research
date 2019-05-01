@@ -6,7 +6,7 @@
 template <class T>
 class Matrix{
   public:
-    static Matrix<T> I(int n)
+    static Matrix<T> I(int n)  //returns the identity matrix of size n
     {
       T zero=0;
       Matrix<T> identity(n,n,zero);
@@ -17,7 +17,7 @@ class Matrix{
       }
       return identity;
     }
-    static T det(Matrix<T> matrix)
+    static T det(Matrix<T> matrix)  //returns the determinant of the matrix
     {
       if(matrix.dim(0)!=matrix.dim(1))
         return NULL;
@@ -38,7 +38,7 @@ class Matrix{
       }
       return sum;
     }
-    static T tr(Matrix<T> matrix)
+    static T tr(Matrix<T> matrix)  //returns the trace of the matrix
     {
       if(matrix.dim(0)!=matrix.dim(1))
       {
@@ -52,7 +52,7 @@ class Matrix{
       }
       return sum;
     }
-    static Matrix<T> diag(Matrix<T> matrix)
+    static Matrix<T> diag(Matrix<T> matrix)  //returns a matrix with only the values on the main diagonal of the original matrix
     {
       if(matrix.dim(0)!=matrix.dim(1))
         std::cout<<"error";
@@ -65,7 +65,7 @@ class Matrix{
       }
       return output;
     }
-    Matrix<T>(int r1, int c1, T initVal)
+    Matrix<T>(int r1, int c1, T initVal)  //constructor: number of rows, number of columns, initial value
     {
       this->r=r1;
       this->c=c1;
@@ -76,7 +76,7 @@ class Matrix{
       }
     }
     
-    Matrix<T> crossOut(int row, int col)
+    Matrix<T> crossOut(int row, int col)  //helper function for cofactor method of calculating determinant. returns a new matrix containing all the rows and columns of the original except for row and col
     {
       row--;col--;
       T nothing=0;
@@ -104,15 +104,15 @@ class Matrix{
       return output;
 
     }
-    T get(int row, int col)
+    T get(int row, int col)  //returns value at 1-indexed row and column in the matrix
     {
       return values[row-1][col-1];
     }
-    void set(int row, int col, T val)
+    void set(int row, int col, T val)  //sets value at 1-indexed (row,col) to val
     {
       values[row-1][col-1]=val;
     }
-    void resize(int row, int col)
+    void resize(int row, int col)  //change the dimensions of a matrix to row and col
     {
       values.resize(row);
       for(auto i:values)
@@ -120,13 +120,13 @@ class Matrix{
       r=row;
       c=col;
     }
-    int dim(int desiredDim)
+    int dim(int desiredDim)  //returns desired dimension: dimension 0 -> returns # rows; dimension 1 -> returns # columns;
     {
       if(desiredDim==0)
         return r;
       return c;
     }
-    Matrix<T> operator*(Matrix<T> other)
+    Matrix<T> operator*(Matrix<T> other) //standard matrix multiplication
     {
       if(dim(1)!=other.dim(0))
       {
@@ -148,7 +148,7 @@ class Matrix{
       }
       return output;
     }
-    Matrix<T> operator*(T scalar)
+    Matrix<T> operator*(T scalar)  //multiplication of the matrix by a scalar
     {
       T zero=0;
       Matrix<T> output(this->r,this->c,zero);
@@ -161,7 +161,7 @@ class Matrix{
       }
       return output;
     }
-    Matrix<T> operator+(Matrix<T> other)
+    Matrix<T> operator+(Matrix<T> other) //matrix addition
     {
       T zero=0;
       Matrix<T> output(this->r,this->c,zero);
@@ -174,12 +174,12 @@ class Matrix{
       }
       return output;
     }
-    Matrix<T> operator-(Matrix<T> other)
+    Matrix<T> operator-(Matrix<T> other)  //matrix subtraction
     {
       T inv=-1;
       return (*this)+(other*inv);
     }
-    Matrix<T> hadamard(Matrix<T> other)
+    Matrix<T> hadamard(Matrix<T> other) //returns Hadamard product of this matrix and another
     {
       if(dim(0)!=other.dim(0) || dim(1)!=other.dim(1))
       {
@@ -203,7 +203,7 @@ class Matrix{
     int c;
 };
   template <class T>
-std::ostream & operator << (std::ostream & out, Matrix<T> matrix)
+std::ostream & operator << (std::ostream & out, Matrix<T> matrix)  //redefined stream insertion for couts
 {
   for(int r=1;r<=matrix.dim(0);r++)
   {
