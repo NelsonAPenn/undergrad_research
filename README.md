@@ -1,14 +1,29 @@
-# undergrad_research
-Libraries and testing of generating functions, etc. on graphs
+# Cycle Embeddings Project / Matrix template class / Polynomial template class
+
+## Overview
+
+Libraries built for the easy and quick calculation of matrix/polynomial expressions, tested on combinatorial problems involving matrices.
 
 Hand-implemented matrix and polynomial template libraries that implement:
 
--normal matrix/polynomial arithmetic
+- normal matrix/polynomial arithmetic
+- Hadamard product on matrices
+- Derivative of the polynomial
+- Determinant of the matrix
+- Taylor Series expansion for a quotient of two polynomials
+- A mostly-borrowed script for random matrix generation, written in Python
 
--Hadamard product on matrices
+## Project Structure
 
--Derivative of the polynomial
+- Implementation of polynomial template class is in `polynomial.h`
+- Implementation of matrix template class is in `matrix.h`
+- Testing by counting n-cycle embeddings is implemented in cycleEmbeddings.cpp
+- makefile is designed for compiling the programs on a Unix machine.
+  - To this effect, use `make` followed by `./ur` (for "undergraduate research")
+- Random matrix generation is done in the Python script that lies within the matrixGenerator directory
+  - Watch out for the strange bytes Python appends to the beginning of the output of the random matrices, if fed directly to the C++ program it will not work. To resolve, simply copy and paste the output.
 
--Determinant of the matrix
+## Setup
 
--Taylor Series expansion for a quotient of two polynomials
+This program uses GMP. As I run Linux on my machine, I used the out-of-the-box Unix GMP library, simply compiling with the flags `-lgmp` and `-lgmpxx`.
+

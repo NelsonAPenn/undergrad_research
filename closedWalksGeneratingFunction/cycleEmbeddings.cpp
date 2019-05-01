@@ -16,7 +16,8 @@ int main()
   mpf_class one=1;
   mpf_class zero=0;
 
-  Matrix<mpf_class> A=readMatrix();
+  Matrix<mpf_class> A=readMatrix(); //reads matrix from input stream (including Linux redirect) in format: "rows columns values" where rows is the number of rows in the matrix, columns is the number of columns, and values is all the entries of the matrix separated by any amount of whitespace
+  //watch out for strange bits at the beginning of the output of the Python random matrix generator, as this will cause the program to error
 
   std::cout<<A; //redefined stream insertion for Matrix class
   for(int i=3;i<=5;i++)
