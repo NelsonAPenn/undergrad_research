@@ -1,0 +1,6 @@
+cycleEmbeddings
+generatingFunction
+
+*.o
+*.gch
+*.swp
